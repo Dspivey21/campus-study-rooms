@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import type { StudyRoom } from './types';
 import { STUDY_ROOMS } from './data/rooms';
 import { RoomFilters, type ActiveFilters } from './components/RoomFilters';
+import { RoomDetail } from './components/RoomDetail';
 import './App.css';
 
 /* ------------------------------------------------------------------ */
@@ -126,12 +127,34 @@ function App() {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
 
+  // Room selection state
+  const [selectedRoom, setSelectedRoom] = useState<StudyRoom | null>(null);
+
   const handleFilterChange = useCallback(
     (_rooms: StudyRoom[], filters: ActiveFilters) => {
       setActiveFilters(filters);
     },
     [],
   );
+
+  const handleRequestBooking = useCallback(
+    (room: StudyRoom) => {
+      const dateStr = selectedDate || 'no date selected';
+      const timeStr =
+        startTime && endTime
+          ? `${startTime} – ${endTime}`
+          : 'no time selected';
+      alert(
+        `Booking requested!\n\nRoom: ${room.building} — ${room.roomNumber}\nDate: ${dateStr}\nTime: ${timeStr}`,
+      );
+      setSelectedRoom(null);
+    },
+    [selectedDate, startTime, endTime],
+  );
+
+  const handleCloseDetail = useCallback(() => {
+    setSelectedRoom(null);
+  }, []);
 
   // Combine both filter stages into a single derived list
   const filteredRooms = useMemo(() => {
@@ -188,7 +211,12 @@ function App() {
           <h2>Available Rooms ({filteredRooms.length})</h2>
           <ul className="room-list">
             {filteredRooms.map((room) => (
-              <li key={room.id} className="room-item">
+              <li
+                key={room.id}
+                className="room-item"
+                onClick={() => setSelectedRoom(room)}
+                style={{ cursor: 'pointer' }}
+              >
                 <div className="room-item-header">
                   <strong>{room.building} — {room.roomNumber}</strong>
                   <span className="room-capacity">{room.capacity} seats</span>
@@ -207,6 +235,12 @@ function App() {
           </ul>
         </main>
       </div>
+
+      <RoomDetail
+        room={selectedRoom}
+        onClose={handleCloseDetail}
+        onRequestBooking={handleRequestBooking}
+      />
     </div>
   );
 }
