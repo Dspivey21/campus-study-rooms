@@ -19,24 +19,27 @@
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
 
+.detail-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
 .close-btn {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: none;
+  flex: 1;
+  padding: 14px;
+  background: var(--hover, #e5e7eb);
+  color: var(--text);
   border: none;
-  font-size: 28px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
-  color: var(--text-muted);
-  line-height: 1;
-  padding: 4px 8px;
-  border-radius: 8px;
   transition: background 0.15s;
 }
 
 .close-btn:hover {
-  background: var(--hover);
-  color: var(--text);
+  background: var(--hover-dark, #d1d5db);
 }
 
 .room-detail h2 {
@@ -78,8 +81,7 @@
 }
 
 .booking-btn {
-  margin-top: 24px;
-  width: 100%;
+  flex: 1;
   padding: 14px;
   background: var(--primary);
   color: white;
