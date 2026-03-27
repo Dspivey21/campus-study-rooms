@@ -14,6 +14,35 @@
   font-size: 28px;
 }
 
+.availability-bar {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.availability-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.availability-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.availability-field input {
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 14px;
+}
+
 .app-layout {
   display: flex;
   gap: 24px;
